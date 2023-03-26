@@ -5,6 +5,7 @@ use eframe::epaint::Vec2;
 use eframe::Theme;
 
 mod prm_reader;
+use mysql::binlog::value;
 use prm_reader::prm_reader::find_value;
 use prm_reader::prm_reader::read;
 mod csv_to_database;
@@ -52,7 +53,6 @@ impl eframe::App for Task1App {
     
     let path1:String=find_value(&values,"src_file1".to_string());
     let path2:String=find_value(&values,"src_file2".to_string());
-    self.value=format!("The connection URL is -mysql://{}:XXXX@{}:{}",user_name,host_name,ports);
 
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.vertical(|ui| {
@@ -85,6 +85,13 @@ impl eframe::App for Task1App {
             ui.vertical(|ui| {
                 if ui.button("Period End ,Calculate expense incurred this month").clicked() {
                     self.value =period_end(url.clone());
+                }
+            });
+            //
+            //
+            ui.vertical(|ui| {
+                if ui.button("Details of Connection URL").clicked() {
+                    self.value =format!("The connection URL is -mysql://{}:XXXX@{}:{}",user_name,host_name,ports);
                 }
             });
             //
