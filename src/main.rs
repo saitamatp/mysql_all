@@ -49,10 +49,11 @@ impl eframe::App for Task1App {
     let passwords=find_value(&values,"password".to_string());
     let url;
     url=format!("mysql://{}:{}@{}:{}",user_name,passwords,host_name,ports);
-    //println!("The connection url is mysql://{}:XXXX@{}:{}",user_name,host_name,ports);
+    
     let path1:String=find_value(&values,"src_file1".to_string());
     let path2:String=find_value(&values,"src_file2".to_string());
-    /*Complete Mysql parmater defination */
+    let message:String=format!("The connection URL is -mysql://{}:XXXX@{}:{}",user_name,host_name,ports);
+    self.value=message;
 
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.horizontal(|ui| {
