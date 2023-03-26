@@ -52,39 +52,38 @@ impl eframe::App for Task1App {
     
     let path1:String=find_value(&values,"src_file1".to_string());
     let path2:String=find_value(&values,"src_file2".to_string());
-    let message:String=format!("The connection URL is -mysql://{}:XXXX@{}:{}",user_name,host_name,ports);
-    self.value=message;
+    self.value=format!("The connection URL is -mysql://{}:XXXX@{}:{}",user_name,host_name,ports);
 
         egui::CentralPanel::default().show(ctx, |ui| {
-            ui.horizontal(|ui| {
+            ui.vertical(|ui| {
                 ui.label(format!("{}", self.value));
                 if ui.button("Read from csv and load to temp tables").clicked() {
                     self.value =csv_read(url.clone(),path1);
                 }
             });
             //
-            ui.horizontal(|ui| {
+            ui.vertical(|ui| {
                 if ui.button("Load to base tables from temp tables").clicked() {
                     self.value =load_base(url.clone());
                 }
             });
             //
             //
-            ui.horizontal(|ui| {
+            ui.vertical(|ui| {
                 if ui.button("Clear temporary tables after data load").clicked() {
                     self.value =clear_tmp(url.clone());
                 }
             });
             //
-            ui.horizontal(|ui| {
+            ui.vertical(|ui| {
                 if ui.button("Load Credit data").clicked() {
                     self.value =credit_load(url.clone(),path2);
                 }
             });
             //
               //
-            ui.horizontal(|ui| {
-                if ui.button("Period End, calculate").clicked() {
+            ui.vertical(|ui| {
+                if ui.button("Period End ,Calculate expense incurred this month").clicked() {
                     self.value =period_end(url.clone());
                 }
             });
@@ -99,14 +98,14 @@ fn main() {
     let native_options = eframe::NativeOptions{
         default_theme: Theme::Dark,
         initial_window_size: Option::from(
-            Vec2::new(400.0, 200.0)
+            Vec2::new(800.0, 400.0)
         ),
-        resizable: false,
+        resizable: true,
         ..Default::default()
     };
 
    eframe::run_native(
-        "MySQL Ledger Load",
+        "MySQL Ledger",
         native_options,
         Box::new(|cc| Box::new( Task1App::new(cc))),
     );
